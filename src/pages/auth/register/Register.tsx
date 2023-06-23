@@ -14,8 +14,12 @@ const Register = () => {
     username: "",
   });
 
+  const [err, setErr] = useState<boolean>(false);
+  const [errMsg, setErrMsg] = useState<string>("");
+
   const navigate = useNavigate();
 
+  // Handle input changes
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
@@ -23,31 +27,37 @@ const Register = () => {
     setSignupInfo((prev) => ({ ...prev, [name]: value }));
   };
 
+  // Handle form submission
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    createUserWithEmailAndPassword(auth, signupInfo.email, signupInfo.password)
+    createUserWithEmailAndPassword(auth, signupInfo.email, signupInfo.password!)
       .then(async (res) => {
         const user = res.user;
+        // Update user profile with username
         await updateProfile(user, {
           displayName: signupInfo.username,
         });
+        setErrMsg("");
+        setErr(false);
         navigate("/");
       })
       .catch((err) => {
-        console.log(err);
+        setErrMsg(err.message);
+        setErr(true);
       });
   };
 
   useEffect(() => {
+    // Check if user is already authenticated
     const unsubscribe = auth.onAuthStateChanged((user) => {
       if (!user) {
-        navigate("/register");
+        navigate("/register"); // If not authenticated, redirect to register page
       } else {
-        navigate("/");
+        navigate("/"); // If authenticated, redirect to home page
       }
     });
 
-    return () => unsubscribe();
+    return () => unsubscribe(); // Cleanup function to unsubscribe from the auth state changes
   }, [navigate]);
 
   return (
@@ -86,6 +96,18 @@ const Register = () => {
             Register
           </Button>
         </Box>
+
+        {err && (
+          <p
+            style={{
+              color: "red",
+              margin: "10px 0px",
+              fontWeight: 600,
+            }}
+          >
+            {errMsg}
+          </p>
+        )}
 
         <p className={styles.noteText}>
           Already have an account? <Link to="/login">Login</Link>
