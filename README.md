@@ -44,3 +44,19 @@ You don’t have to ever use `eject`. The curated feature set is suitable for sm
 You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
 To learn React, check out the [React documentation](https://reactjs.org/).
+
+# Auth
+
+Auth is a web application that allows users to log in, sign up, reset their password, and view a home page with lazy loading of additional data.
+
+## Features
+
+- User authentication using Firebase: Users can create an account and log in using their email and password. Firebase Authentication is used to handle user authentication and account management.
+- Password Reset: Users can request a password reset email if they forget their password. Firebase handles the password reset functionality.
+- Home Page with Lazy Loading: The home page displays a list of data items. As the user scrolls to the bottom of the page, additional data is lazily loaded and displayed.
+
+## Technologies Used
+
+- React: JavaScript library for building user interfaces.
+- Firebase: Platform for building web and mobile applications. Firebase Authentication is used for user authentication and account management.
+- CSS: Styling the components and layout of the website .
