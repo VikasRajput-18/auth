@@ -1,26 +1,44 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import Login from "./pages/auth/login/Login";
-import Home from "./pages/home/Home";
-import Register from "./pages/auth/register/Register";
-import ResetPassword from "./pages/auth/reset/ResetPassword";
+import { lazy, Suspense } from "react";
+
+const Home = lazy(() => import("./pages/home/Home"));
+const Login = lazy(() => import("./pages/auth/login/Login"));
+const Register = lazy(() => import("./pages/auth/register/Register"));
+const ResetPassword = lazy(() => import("./pages/auth/reset/ResetPassword"));
 
 const App = () => {
   const router = createBrowserRouter([
     {
       path: "/",
-      element: <Home />,
+      element: (
+        <Suspense fallback="Loading...">
+          <Home />,
+        </Suspense>
+      ),
     },
     {
       path: "/login",
-      element: <Login />,
+      element: (
+        <Suspense fallback="Loading...">
+          <Login />,
+        </Suspense>
+      ),
     },
     {
       path: "/register",
-      element: <Register />,
+      element: (
+        <Suspense fallback="Loading...">
+          <Register />,
+        </Suspense>
+      ),
     },
     {
       path: "/reset",
-      element: <ResetPassword />,
+      element: (
+        <Suspense fallback="Loading...">
+          <ResetPassword />,
+        </Suspense>
+      ),
     },
   ]);
 
